@@ -32,5 +32,13 @@ def back_song_musicl(mid):
     p=get_music_all_url()
     print(p.get_music_src(mid))
     return p.get_music_src(mid)
+@app.route("/index_new_music_list")
+def back_new_music_list():
+    p=get_music_all_url()
+    return p.get_mudic_new_song_list()
+@app.route("/index_hot_key")
+def back_hot_key():
+    p=get_music_all_url()
+    return p.get_hot_key()
 if __name__ == '__main__':
     app.run()
