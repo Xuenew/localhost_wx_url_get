@@ -1,5 +1,7 @@
 from flask import Flask
 from spider_music_get import get_music_all_url
+from get_news_info import get_news
+from get_listen_read import get_info_listen
 import json
 app = Flask(__name__)
 @app.route('/')
@@ -13,7 +15,8 @@ def back_song_list(name):
     :return:
     """
     name=name
-    p=get_music_all_url(music_name=name)
+    print(name,"***********************************")
+    p=get_music_all_url(music_name=name[5:])
     return p.get_music_song()
 @app.route("/index_hot_image")
 def back_index_hot_image():
@@ -40,5 +43,24 @@ def back_new_music_list():
 def back_hot_key():
     p=get_music_all_url()
     return p.get_hot_key()
+@app.route("/music_read/<url>",methods=['GET',"POST"])
+def music_read(url):
+    print("right ")
+    print(url)
+    # url = url[4:]
+    # xx=request.values.get("key")
+    url_t =" https://view.inews.qq.com/w/"+url
+    p = get_news(url=url_t)
+    return json.dumps(p.get_main_con())
+@app.route("/get_read_listen/<info>",methods=['GET',"POST"])
+def get_read_listen(info):
+    info = info[5:]
+    print(info)
+    p = get_info_listen(info)
+
+    return p.get_listen()
 if __name__ == '__main__':
-    app.run()
+    from werkzeug.contrib.fixers import ProxyFix
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+    app.run(host='0.0.0.0',port=5000,debug=True)
+    # app.run()
