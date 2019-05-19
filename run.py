@@ -134,7 +134,7 @@ def shen_qing_jie_tiao(info):
     #print("ti jiao cheng gong")
     data = json.dumps(
         {"res": "借条已经成立，并且给对方发送了短信", "suc": "成功", "std": "1", "data": {"user_id": "", "user_info": key_excut}})
-    client = AcsClient('LTAIXXXXXXXX', 'XXXXXXX', 'cn-hangzhou')#密码不能上传
+    client = AcsClient('LTAIXXXXXX', 'XXXXXX', 'cn-hangzhou')#密码不能上传
     request = CommonRequest()
     request.set_accept_format('json')
     request.set_domain('dysmsapi.aliyuncs.com')
