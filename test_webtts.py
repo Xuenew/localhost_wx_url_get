@@ -14,16 +14,16 @@ def getHeader():
         curTime = str(int(time.time()))
         #ttp=ssml
         param = "{\"aue\":\""+AUE+"\",\"auf\":\"audio/L16;rate=16000\",\"voice_name\":\"xiaoyan\",\"engine_type\":\"intp65\",\"text_type\":\"text\"}"
-        print("param:{}".format(param))
+        #print("param:{}".format(param))
         
         paramBase64 = str(base64.b64encode(param.encode('utf-8')), 'utf-8')
-        print("x_param:{}".format(paramBase64))
+        #print("x_param:{}".format(paramBase64))
         
         m2 = hashlib.md5()
         m2.update((API_KEY + curTime + paramBase64).encode('utf-8'))
         
         checkSum = m2.hexdigest()
-        print('checkSum:{}'.format(checkSum))
+        #print('checkSum:{}'.format(checkSum))
         
         header ={
                 'X-CurTime':curTime,
@@ -33,7 +33,7 @@ def getHeader():
                 'X-Real-Ip':'36.110.111.61',
                 'Content-Type':'application/x-www-form-urlencoded; charset=utf-8',
         }
-        print(header)
+        #print(header)
         return header
 
 def getBody(text):
@@ -47,14 +47,14 @@ def writeFile(file, content):
 r = requests.post(URL,headers=getHeader(),data=getBody("你好，清帆科技，我是感知计算组的一员，我叫薛忆阳。今年是2019年的一月十六号"))
 
 contentType = r.headers['Content-Type']
-print("r.headers['Content-Type']")
+#print("r.headers['Content-Type']")
 if contentType == "audio/mpeg":
     sid = r.headers['sid']
     if AUE == "raw":
-        print(r.content)
+        #print(r.content)
         writeFile("audio/"+sid+".wav", r.content)
     else :
-        print(r.content)
+        #print(r.content)
         writeFile("audio/"+"xiaoyan"+".mp3", r.content)
     # test
     with open("audio/tes_wb.text","wb") as k:
@@ -67,6 +67,6 @@ if contentType == "audio/mpeg":
     #     g.write(r.content)
     # with open("audio/tst1.wav", "ab") as g:
     #     g.write(r.content)
-    print ("success, sid = " + sid)
+    #print ("success, sid = " + sid)
 else :
-    print (r.text)
+    #print (r.text)

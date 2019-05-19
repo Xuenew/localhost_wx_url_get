@@ -50,13 +50,13 @@ class get_music_all_url():
         selector = etree.HTML(respones)
         xx = selector.xpath("//audio[@id='h5audio_media']/@src")
         # xx=selector.xpath("//body")
-        print(xx)
+        #print(xx)
         # with open("ceshi.html","w") as f:
         #     f.write(respones)
         name=self.json_get["data"]["song"]["list"][self.music_list_id]["title"]
         author=self.json_get["data"]["song"]["list"][self.music_list_id]["singer"][0]["name"]
         poster= selector.xpath("//img[@class='album_cover__img js_album_cover']/@src")
-        print({"src":xx,"name":name,"author":author,"poster":poster   })
+        #print({"src":xx,"name":name,"author":author,"poster":poster   })
         return json.dumps({"src":xx,"name":name,"author":author,"poster":poster,"list":self.json_get["data"]["song"]["list"] })
     @staticmethod
     def get_music_src(song_id):
@@ -75,8 +75,8 @@ class get_music_all_url():
         xx = selector.xpath("//audio[@id='h5audio_media']/@src")
         pic = selector.xpath("//img[@class='album_cover__img js_album_cover']/@src")
         # / html / body / article / section[2] / div / img
-        print(pic)
-        print(xx)
+        #print(pic)
+        #print(xx)
         return json.dumps({"src":xx,"pic_url":pic})
     @classmethod
     def get_mudic_new_song_list(cls):
@@ -92,9 +92,9 @@ class get_music_all_url():
         }
         url = "https://u.y.qq.com/cgi-bin/musicu.fcg?-=recom719315609113707&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0&data=%7B%22comm%22%3A%7B%22ct%22%3A24%7D%2C%22category%22%3A%7B%22method%22%3A%22get_hot_category%22%2C%22param%22%3A%7B%22qq%22%3A%22%22%7D%2C%22module%22%3A%22music.web_category_svr%22%7D%2C%22recomPlaylist%22%3A%7B%22method%22%3A%22get_hot_recommend%22%2C%22param%22%3A%7B%22async%22%3A1%2C%22cmd%22%3A2%7D%2C%22module%22%3A%22playlist.HotRecommendServer%22%7D%2C%22playlist%22%3A%7B%22method%22%3A%22get_playlist_by_category%22%2C%22param%22%3A%7B%22id%22%3A8%2C%22curPage%22%3A1%2C%22size%22%3A40%2C%22order%22%3A5%2C%22titleid%22%3A8%7D%2C%22module%22%3A%22playlist.PlayListPlazaServer%22%7D%2C%22new_song%22%3A%7B%22module%22%3A%22QQMusic.MusichallServer%22%2C%22method%22%3A%22GetNewSong%22%2C%22param%22%3A%7B%22type%22%3A0%7D%7D%2C%22new_album%22%3A%7B%22module%22%3A%22music.web_album_library%22%2C%22method%22%3A%22get_album_by_tags%22%2C%22param%22%3A%7B%22area%22%3A1%2C%22company%22%3A-1%2C%22genre%22%3A-1%2C%22type%22%3A-1%2C%22year%22%3A-1%2C%22sort%22%3A2%2C%22get_tags%22%3A1%2C%22sin%22%3A0%2C%22num%22%3A40%2C%22click_albumid%22%3A0%7D%7D%2C%22toplist%22%3A%7B%22module%22%3A%22music.web_toplist_svr%22%2C%22method%22%3A%22get_toplist_index%22%2C%22param%22%3A%7B%7D%7D%2C%22focus%22%3A%7B%22module%22%3A%22QQMusic.MusichallServer%22%2C%22method%22%3A%22GetFocus%22%2C%22param%22%3A%7B%7D%7D%7D"
         respones = requests.get(url=url, headers=headers).content
-        # print(json.loads(respones)["new_song"]["data"]["song_list"][0]["mid"])#歌曲mid phone
-        # print(json.loads(respones)["new_song"]["data"]["song_list"][0]["title"])#歌曲 name
-        # print(json.loads(respones)["new_song"]["data"]["song_list"][0]["singer"])#歌曲 author []
+        # #print(json.loads(respones)["new_song"]["data"]["song_list"][0]["mid"])#歌曲mid phone
+        # #print(json.loads(respones)["new_song"]["data"]["song_list"][0]["title"])#歌曲 name
+        # #print(json.loads(respones)["new_song"]["data"]["song_list"][0]["singer"])#歌曲 author []
         dict_new_song = json.loads(respones)["new_song"]["data"]["song_list"][:30]
         back_list = []
         # get_music_all_url.get_new_song_list_pic("ss")
@@ -102,7 +102,7 @@ class get_music_all_url():
             back_list.append({"pic_url":get_music_all_url.get_new_song_list_pic(i["mid"]),
                               "music_name":i["title"],"music_author":[j["name"] for j in i["singer"]   ]
                               ,"music_lyric":"","song_id":i["mid"]})
-        print(back_list)
+        #print(back_list)
         return json.dumps(back_list)
     @classmethod
     def get_new_song_list_pic(cls,mid):
@@ -114,7 +114,7 @@ class get_music_all_url():
         etree = lxml.html.etree
         selector = etree.HTML(respones)
         pic = selector.xpath("//img[@class='album_cover__img js_album_cover']/@src")
-        # print(pic)
+        # #print(pic)
         img_url = "http:"+ pic[0]
         return img_url
     def init_get_json(self):
@@ -126,11 +126,11 @@ class get_music_all_url():
         }
         url = "https://c.y.qq.com/soso/fcgi-bin/client_search_cp?ct=24&qqmusic_ver=1298&new_json=1&remoteplace=yqq.yqq.yqq&searchid=24984885683536913&t=0&aggr=1&cr=1&catZhida=1&lossless=0&flag_qc=0&p=1&n=20&w={}&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0".format(self.music_name)
         respones = requests.get(url=url,headers=headers).content
-        # print(json.loads(respones)["data"]["song"]["list"][0]["singer"][0]["mid"])#歌曲mid
-        # print(json.loads(respones)["data"]["song"]["list"][0]["mv"]["vid"])#歌曲 mv mid
-        # print(json.loads(respones)["data"]["song"]["list"][0]["singer"][0]["name"])#歌曲作者
-        # print(json.loads(respones)["data"]["song"]["list"][0]["mid"])#歌曲歌词页mid
-        # print(json.loads(respones)["data"]["song"]["list"][0]["title"])#歌曲名字
+        # #print(json.loads(respones)["data"]["song"]["list"][0]["singer"][0]["mid"])#歌曲mid
+        # #print(json.loads(respones)["data"]["song"]["list"][0]["mv"]["vid"])#歌曲 mv mid
+        # #print(json.loads(respones)["data"]["song"]["list"][0]["singer"][0]["name"])#歌曲作者
+        # #print(json.loads(respones)["data"]["song"]["list"][0]["mid"])#歌曲歌词页mid
+        # #print(json.loads(respones)["data"]["song"]["list"][0]["title"])#歌曲名字
         self.json_get = json.loads(respones)
         return self.json_get
 #返回的是 搜索的结果列表 0-19
@@ -154,7 +154,7 @@ class get_music_all_url():
         # xx = selector.xpath("//body")
         # with open("test.html","wb") as f:
         #     f.write(response)
-        # print(json.loads(response)["data"]["slider"][0]["picUrl"])
+        # #print(json.loads(response)["data"]["slider"][0]["picUrl"])
         return json.loads(response)["data"]["slider"] #返回一个字典 loads 是加载json字符变成字典
     @staticmethod
     def get_hot_key():
@@ -166,12 +166,12 @@ class get_music_all_url():
         }
         url = "https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg?g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0"
         respones = requests.get(url=url, headers=headers).content
-        # print(json.loads(respones)["data"]["hotkey"])
+        # #print(json.loads(respones)["data"]["hotkey"])
         key_list = json.loads(respones)["data"]["hotkey"]
         key_word = []
         for i in key_list:
             key_word.append(i["k"])
-        # print(key_word)
+        # #print(key_word)
         return json.dumps(key_word[:7])
 if __name__ == '__main__':
     p=get_music_all_url(music_name="遥远的她")

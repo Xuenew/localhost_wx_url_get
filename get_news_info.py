@@ -24,38 +24,38 @@ class get_news():
         img_span_des = [] #图片解释列表
         r = requests.get(url=self.url,headers=self.headers).text
         # x = re.match(r'"content":[[](.*)[]]',str(r))
-        # print(json.dumps(r))
+        # #print(json.dumps(r))
         result = re.findall('content\":[[](.*)[]],\"image_count', str(r))
         title_res = re.findall('title\":(.*),\"advertise', str(r))
         dic_list = result[0].split("},")
-        # print("**********",len(xxx))
-        # print("**********",type(json.loads(xxx[0]+"}",encoding='UTF-8')))
+        # #print("**********",len(xxx))
+        # #print("**********",type(json.loads(xxx[0]+"}",encoding='UTF-8')))
         # dic_list[-1] + "}"
-        # print(type(dic_list))
+        # #print(type(dic_list))
         #最后一个是文本
-        # print(dic_list[-1])
+        # #print(dic_list[-1])
         final_art = json.loads(dic_list[-1], encoding='UTF-8')["desc"].split("\n")# list
         data["art_des"] = final_art
         #出错了好久 原来是分割的时候 去掉了｝符号 每一个都去掉了
         for lis_i in dic_list[:-1]:
-            # print(lis_i)
+            # #print(lis_i)
             lis_i = json.loads(lis_i+"}" , encoding='UTF-8')
-            # print(type(lis_i))
+            # #print(type(lis_i))
             if lis_i["type"] == "img_url":
-                print("img")
+                #print("img")
                 img_list.append(lis_i["img_url"])
                 img_span_des.append(lis_i["desc"])
             elif lis_i["type"] == "cnt_article":
-                print("art")
+                #print("art")
         data["img_url_list"] = img_list
         data["img_url_list_desc"] = img_span_des
         data["title"] = json.loads(title_res[0],encoding="utf-8")
         # data["art_des"] = final_art
-        # print(data)
+        # #print(data)
         # final_art = json.loads(dic_list[3],encoding='UTF-8')["desc"].split("\n")
-        # print(final_art[:3])
-        # print(title_res[0])
-        # print(json.loads(title_res[0],encoding="utf-8"))
+        # #print(final_art[:3])
+        # #print(title_res[0])
+        # #print(json.loads(title_res[0],encoding="utf-8"))
 
         return  data
 # if __name__ == '__main__':
